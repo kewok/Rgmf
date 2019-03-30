@@ -1,0 +1,29 @@
+Package: RGMF
+Title: R Toolkit Visualizing and Analyzing "Give Me Fever!" Epidemics
+Version: 0.0.0.9000
+Authors@R: person("Kenichi", "Okamoto", email = "kwokamoto@gmail.com", role = c("aut", "cre"))
+Description: This package provides a set of R tools for visualizing and
+    analyzing epidemiological dynamics based on the epidemic state file produced
+    after a "Give Me Fever!" exercise. Key functionalities include: estimating
+    important epidemiological parameters (including the basic reproductive number
+    and the force of infection), plotting time series for the different epidemic
+    compartments, and visualizing the epidemic network structure through time.
+Depends:
+    R (>= 3.2.2),
+    fields (>= 8.3.6),
+    FME (>= 1.3.5),
+    igraph (>= 1.0.1),
+    rjson (>= 0.2.15),
+    stringr (>= 1.0.0),
+Imports:
+    fields (>= 8.3.6),
+    FME (>= 1.3.5),
+    igraph (>= 1.0.1),
+    rjson (>= 0.2.15),
+    stringr (>= 1.0.0),
+Suggests:
+    animation (>= 2.4),
+    R0 (>= 1.2.6)
+License: MIT
+LazyData: true
+RoxygenNote: 6.0.1
