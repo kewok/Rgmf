@@ -85,7 +85,7 @@ visualize_epidemic <- function(epidemic, iteration, last_infection_only=F, use_s
 		addComp <- compartments[10:length(compartments)]
 		compartments <- compartments[1:9]
 		legend(-1.67,-1.2, ncol=4, names(default_color_scheme[compartments]),fill=default_color_scheme[compartments],box.lwd=0, pt.cex=1,cex=ifelse(length(compartments) > 5, 0.90, 1))
-		legend(0.94,-1.2, names(default_color_scheme[addComp]), fill=default_color_scheme[addComp], box.lwd=0, pt.cex=1,cex=ifelse(length(compartments) > 5, 0.90, 1))
+		legend(0.93,-1.2, names(default_color_scheme[addComp]), fill=default_color_scheme[addComp], box.lwd=0, pt.cex=1,cex=ifelse(length(compartments) > 5, 0.90, 1))
 		}
 	}
 

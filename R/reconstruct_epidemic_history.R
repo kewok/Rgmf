@@ -31,6 +31,7 @@ reconstruct_epidemic_history <- function(epidemic)
 		{
 		time_elapsed[i] <- difftime(as.POSIXct(timings[i],format="%Y-%m-%dT%H:%M:%OS"), as.POSIXct(timings[1],format="%Y-%m-%dT%H:%M:%OS"))
 		}
+	time_elapsed <- sort(time_elapsed)
 	epidemic_history <- list(possible_compartments = possible_compartments, outcome = outcome, time_elapsed=time_elapsed)
 	class(epidemic_history) <- 'epidemic_history'
 	return(epidemic_history)
