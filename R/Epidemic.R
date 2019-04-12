@@ -1,6 +1,6 @@
 #'The Epidemic object
 #'
-#'The function `Epidemic' takes as its argument the path to the json file produced by Give Me Fever! and creates an Epidemic object for use in R. This Epidemic object aims to reflect the contents of the json file describing the state of the Give Me Fever! epidemic itself at a given point in time. Put differently, an Epidemic object can be thought of as representing the Give Me Fever! save file, so that coordinators and instructors can represent the outcome of the epidemic using R. However, the correspondence between an Epidemic object from RGMF and the primary json file is not one-to-one; during construction, a few aspects of the json file are removed to facilitate its use in RGMF rather than the main app simulator. \cr
+#'The function `Epidemic' takes as its argument the path to the json file produced by Give Me Fever! and creates an Epidemic object for use in R. This Epidemic object aims to reflect the contents of the json file describing the state of the Give Me Fever! epidemic itself at a given point in time. Put differently, an Epidemic object can be thought of as representing the Give Me Fever! save file, so that coordinators and instructors can represent the outcome of the epidemic using R. However, the correspondence between an Epidemic object from RGMF and the primary json file is not one-to-one; during construction, a few aspects of the json file are removed to facilitate its use in RGMF rather than the main app simulator.  \cr
 #'
 #'@usage Epidemic(epidemic_file)
 #'@param epidemic_file A character variable that specifies the path to the json for the epidemic state. 
@@ -33,7 +33,7 @@
 #'\item host_history: a character vector whose ith element is the ith epidemic compartment through which a host passed
 #'\item host_name: the host's name
 #'\item host_switch_time: a numeric vector whose ith element is the time step on which a host switched from the ith compartment through which they passed
-#'} \cr
+#'}  Note that RGMF will be agnostic about whether quarantine/isolation was a false positive; it is best that the user directly consult the prior state of the host themself to determine this. \cr
 
 #'The final attribute of the Epidemic class consists of the compartments list. Each member of the compartments list specifies details about the compartment simulated, and consists of the following members:\cr
 #'\itemize{
@@ -71,7 +71,7 @@ Epidemic <- function(epidemic_file)
 
 #'Configure the hosts
 #'
-#'For a json string, return a list of hosts, which each element is itself a list.  \cr
+#'For a json string, return a list of hosts, which each element is itself a list. Note that RGMF will be agnostic about whether quarantine/isolation was a false positive.  \cr
 #'
 #'@usage Used internally by Epidemic()
 #'@param Epidemic_JSON JSON string decribing the structure of the epidemic
@@ -102,7 +102,21 @@ setup_hosts <- function(Epidemic_JSON)
 			{
 			for (j in host_changing_event)
 				{
-				host$host_history <- c(host$host_history, Compartment[Epidemic_JSON$host_histories[[j]]$destination_compartment])
+				if ((is.element(Epidemic_JSON$host_histories[[j]]$destination_compartment, c('Kf','KfR','Kt'))) || (is.element(Epidemic_JSON$host_histories[[j]]$destination_compartment, c('Qf','QfR','Qt'))) )
+					{
+					if (is.element(Epidemic_JSON$host_histories[[j]]$destination_compartment, c('Qf','QfR','Qt')))
+						{
+						host$host_history <- c(host$host_history, Compartment['Q'])
+						}
+					else
+						{
+						host$host_history <- c(host$host_history, Compartment['K'])
+						}
+					}
+				else
+					{
+					host$host_history <- c(host$host_history, Compartment[Epidemic_JSON$host_histories[[j]]$destination_compartment])
+					}
 				host$host_switch_time <- c(host$host_switch_time, Epidemic_JSON$host_histories[[j]]$switch_time)
 				}
 			}
